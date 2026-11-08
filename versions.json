@@ -1,0 +1,36 @@
+{
+  "ThinkBookISHProbe": {
+    "version": "0.5.3",
+    "bundle_id": "local.ThinkBookISHProbe",
+    "executable_sha256": "a015ccfe39f4c6fcbe43cf1fca69e3045c00b69c4d961f6a6d325925052de1c4"
+  },
+  "ISHLightSensor": {
+    "version": "1.0.0",
+    "bundle_id": "local.ISHLightSensor",
+    "executable_sha256": "e188d5058a6662b42919dfeb6bbb689d067d2c9b5fea71b07936a2df63ff9ee8"
+  },
+  "NativeALSDisplay": {
+    "version": "1.0.1",
+    "bundle_id": "local.NativeALSDisplay",
+    "executable_sha256": "44a54867e7c16cc3c8f2ebbd9bb9b2e68c9dadc13e5db1cc026414a484f11b7c"
+  },
+  "GoodixForceTouch": {
+    "version": "1.0.0",
+    "bundle_id": "local.goodix.ForceTouch",
+    "executable_sha256": "76a3d5de7b404f4aa1e17aea89fe96464ba7448a0ed15c394edec64723b7b574"
+  },
+  "VoodooInput": {
+    "version": "1.1.8",
+    "bundle_id": "me.kishorprins.VoodooInput",
+    "executable_sha256": "13f2add179f04743d6f047c814c8317158fb487aedda73ec23e0302c0ea3c49e"
+  },
+  "VoodooI2CHID": {
+    "version": "1.0.2",
+    "bundle_id": "com.alexandred.VoodooI2CHID",
+    "executable_sha256": "cda00746f346a1068bf28829ba7e7f37c525ab3f1a67a883639930fd3121e17c"
+  },
+  "ThinkBookI2C": {
+    "version": "1.0.0",
+    "bundle_id": "local.thinkbook.i2c.compatibility"
+  }
+}
