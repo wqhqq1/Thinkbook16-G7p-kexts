@@ -7,6 +7,8 @@ import shutil
 import subprocess
 import tempfile
 
+from meteorlake_gpio import write_header
+
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / 'src'
 HID_SOURCE = SOURCE / 'VoodooI2CHID/VoodooI2C Satellites/VoodooI2CHID/VoodooI2CHID'
@@ -15,6 +17,7 @@ TARGETS = {
     'ISHLightSensor': [SOURCE / 'ISHLightSensor' / name for name in ('ISHLightSensor.cpp', 'AmbientLightValue.cpp')],
     'NativeALSDisplay': [SOURCE / 'NativeALSDisplay/NativeALSDisplay.cpp'],
     'GoodixForceTouch': [SOURCE / 'GoodixForceTouch/GoodixForceTouchEngine.cpp'],
+    'VoodooGPIO': sorted((SOURCE / 'VoodooGPIO').rglob('*.cpp')),
     'VoodooInput': sorted((SOURCE / 'VoodooInput').rglob('*.cpp')),
     'VoodooI2CHID': sorted(HID_SOURCE.rglob('*.cpp')),
 }
@@ -55,8 +58,14 @@ def build(name, args):
     args.output.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix='thinkbook-kext-', dir=args.output) as temp:
         work = Path(temp)
+        sources = [*TARGETS[name], target / 'module.c']
+        if name == 'VoodooGPIO':
+            staged_source = work / 'source'
+            shutil.copytree(target, staged_source)
+            write_header(args.pinctrl, staged_source / 'MeteorLake-P/VoodooGPIOMeteorLakeP.hpp')
+            sources = [staged_source / path.relative_to(target) for path in sources]
         objects = []
-        for i, path in enumerate([*TARGETS[name], target / 'module.c']):
+        for i, path in enumerate(sources):
             obj = work / f'{i}.o'
             compiler, options = ('clang++', cpp) if path.suffix == '.cpp' else ('clang', [])
             run('xcrun', compiler, *common, *options, '-c', str(path), '-o', str(obj))
@@ -79,13 +88,18 @@ def main():
     parser.add_argument('--sdk', type=Path, required=True, help='MacKernelSDK source directory')
     parser.add_argument('--lilu', type=Path, help='Lilu repository root')
     parser.add_argument('--virtualsmc', type=Path, help='VirtualSMC repository root')
+    parser.add_argument('--pinctrl', type=Path, help='Linux v6.12 pinctrl-meteorlake.c for VoodooGPIO')
     parser.add_argument('--output', type=Path, default=ROOT / 'build')
     parser.add_argument('targets', nargs='*', help='Kext names without .kext, defaults to all')
     args = parser.parse_args()
     names = [*TARGETS, 'ThinkBookI2C']
-    for name in args.targets or names:
+    selected = args.targets or [name for name in names if name != 'VoodooGPIO' or args.pinctrl]
+    for name in selected:
         if name not in names:
             parser.error(f'Unknown target: {name}')
+        if name == 'VoodooGPIO' and not args.pinctrl:
+            parser.error('VoodooGPIO requires --pinctrl. See README.md.')
+    for name in selected:
         build(name, args)
 
 
