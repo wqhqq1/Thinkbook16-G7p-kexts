@@ -4,17 +4,17 @@
 
 macOS kernel extensions for the Lenovo ThinkBook 16 G7+ IAH (21TL). This snapshot comes from a Core Ultra 9 285H system running macOS Sequoia 15.7.8 (24G824, x86_64). It includes model-specific extensions for the trackpad, ambient light sensor, display, and internal digital microphone, along with the corresponding ACPI tables.
 
-| Component | Version | Purpose |
-| --- | --- | --- |
-| `ThinkBookISHProbe.kext` | 0.5.3 | Reads ambient light continuously from Intel ISH `8086:7745` and handles HID timeouts and wake from sleep. |
-| `ISHLightSensor.kext` | 1.0.0 | Converts measured light levels to VirtualSMC ambient light keys and notifies macOS of updates. |
-| `NativeALSDisplay.kext` | 1.0.1 | Exposes the usable brightness range of the `06AF:C4B5` internal panel for native automatic brightness. |
-| `GoodixForceTouch.kext` | 1.0.0 | Distinguishes normal and firm presses on the Goodix `27C6:01E9` trackpad. |
-| `VoodooGPIO.kext` | 1.1.1 (local build) | Adds Meteor Lake-P `INTC105E` support for trackpad GPIO interrupts. |
-| `VoodooI2CHID.kext` | 1.0.2 | Adapts to this model’s HID descriptor and filters duplicate reports for the same sample. |
-| `VoodooInput.kext` | 1.1.8 | Preserves the pressure values reported by the trackpad. |
-| `ThinkBookI2C.kext` | 1.0.0 | Matches this model’s `8086:7778` I2C controller to VoodooI2C. Contains only `Info.plist`. |
-| `OhMyDSPACE.kext` / OhMyDSP ACE | 0.3.4 (local kernel build) | Enables the internal digital microphone and internal speaker playback while recording. |
+| Component | Version | Purpose | Injection guide |
+| --- | --- | --- | --- |
+| `ThinkBookISHProbe.kext` | 0.5.3 | Reads ambient light continuously from Intel ISH `8086:7745` and handles HID timeouts and wake from sleep. | [Open guide](docs/thinkbook-ish-probe.md#english) |
+| `ISHLightSensor.kext` | 1.0.0 | Converts measured light levels to VirtualSMC ambient light keys and notifies macOS of updates. | [Open guide](docs/ish-light-sensor.md#english) |
+| `NativeALSDisplay.kext` | 1.0.1 | Exposes the usable brightness range of the `06AF:C4B5` internal panel for native automatic brightness. | [Open guide](docs/native-als-display.md#english) |
+| `GoodixForceTouch.kext` | 1.0.0 | Distinguishes normal and firm presses on the Goodix `27C6:01E9` trackpad. | [Open guide](docs/goodix-force-touch.md#english) |
+| `VoodooGPIO.kext` | 1.1.1 (local build) | Adds Meteor Lake-P `INTC105E` support for trackpad GPIO interrupts. | [Open guide](docs/voodoo-gpio.md#english) |
+| `VoodooI2CHID.kext` | 1.0.2 | Adapts to this model’s HID descriptor and filters duplicate reports for the same sample. | [Open guide](docs/voodoo-i2chid.md#english) |
+| `VoodooInput.kext` | 1.1.8 | Preserves the pressure values reported by the trackpad. | [Open guide](docs/voodoo-input.md#english) |
+| `ThinkBookI2C.kext` | 1.0.0 | Matches this model’s `8086:7778` I2C controller to VoodooI2C. Contains only `Info.plist`. | [Open guide](docs/thinkbook-i2c.md#english) |
+| `OhMyDSPACE.kext` / OhMyDSP ACE | 0.3.4 (local kernel build) | Enables the internal digital microphone and internal speaker playback while recording. | [Open guide](docs/microphone.md#english) |
 
 `Kexts/` contains the publicly distributed bundles, `src/` contains the corresponding source, and `versions.json` records bundle IDs, versions, and binary SHA-256 hashes. `ACPI/` contains the DSL sources and compiled AML for three supplemental ACPI tables. Wi-Fi, Bluetooth, and the full EFI `config.plist` are maintained separately.
 
@@ -33,12 +33,14 @@ Each component follows the license and notices in its source. Upstream license t
 
 ## OpenCore integration
 
+See the [OpenCore injection steps](docs/opencore.md#english) for EFI backup, I2C load order, and configuration validation.
+
 Start with a bootable OpenCore configuration. Replace each existing bundle with the corresponding bundle from this repository, and check `BundlePath`, `ExecutablePath`, and `PlistPath` under `Kernel/Add`. Leave `ExecutablePath` empty for `ThinkBookI2C`. The following dependencies reflect the tested configuration.
 
 - The trackpad uses `SSDT-TB-I2C.aml`, VoodooI2C 2.9.1, VoodooI2CServices, and this repository’s I2C components. Use a GPIO driver that supports `INTC105E` or [build VoodooGPIO locally](#build-voodoogpio-separately). The tested setup places the GPIO driver and `VoodooInput.kext` in `VoodooI2C.kext/Contents/PlugIns/` and places `GoodixForceTouch`, `ThinkBookI2C`, and `VoodooI2CHID` in `EFI/OC/Kexts/`. Keep the existing GPIO ACPI configuration and enable only one copy of each bundle ID.
 - Automatic brightness uses `SSDT-IALS.aml`, Lilu, VirtualSMC, and the three light sensor and display extensions in this repository. Load Lilu and VirtualSMC before `ISHLightSensor` and disable the old `SMCLightSensor` entry.
 - `SSDT-TB-HDA.aml` is an optional ACPI table for using the onboard audio controller with AppleALC. The AppleALC, NMHDA, and CtlnaSDXC binaries come from their respective projects or macOS. [AppleALC](https://github.com/acidanthera/AppleALC) · [NMHDA](https://github.com/nullmoth/NMHDA)
-- The internal digital microphone requires OpenCore to load `OhMyDSPACE.kext` and macOS to load the accompanying Core Audio plug-in and daemon. [Microphone build and installation guide (Chinese)](docs/microphone.md)
+- The internal digital microphone requires OpenCore to load `OhMyDSPACE.kext` and macOS to load the accompanying Core Audio plug-in and daemon. [Microphone build and installation guide](docs/microphone.md#english)
 
 This snapshot uses the tested machine’s firmware device paths and hardware IDs. Check those values before using the extensions on a different model or BIOS version.
 

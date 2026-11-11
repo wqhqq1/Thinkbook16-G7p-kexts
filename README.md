@@ -4,17 +4,17 @@
 
 联想 ThinkBook 16 G7+ IAH（21TL）的 macOS 专用 kext。当前快照来自 Core Ultra 9 285H、macOS Sequoia 15.7.8（24G824，x86_64）的实机。收录触控板、环境光、显示接入和内置数字麦克风的本机版本，以及配套 ACPI 源码。
 
-| 模块 | 版本 | 本机用途 |
-| --- | --- | --- |
-| `ThinkBookISHProbe.kext` | 0.5.3 | 从 Intel ISH `8086:7745` 持续读取照度，处理 HID 超时和睡眠唤醒 |
-| `ISHLightSensor.kext` | 1.0.0 | 将真实照度转换为 VirtualSMC 环境光键，通知 macOS 更新 |
-| `NativeALSDisplay.kext` | 1.0.1 | 为目标内屏 `06AF:C4B5` 提供原生自动调光所需的可用亮度范围 |
-| `GoodixForceTouch.kext` | 1.0.0 | 为 Goodix `27C6:01E9` 识别普通按压和重按 |
-| `VoodooGPIO.kext` | 1.1.1（本地构建） | 增加 `INTC105E` Meteor Lake-P 支持，用于本机触控板 GPIO 中断 |
-| `VoodooI2CHID.kext` | 1.0.2 | 适配本机 HID 描述符，过滤同一采样的重复报告 |
-| `VoodooInput.kext` | 1.1.8 | 保留触控板上报的压力值 |
-| `ThinkBookI2C.kext` | 1.0.0 | 让 VoodooI2C 匹配本机 `8086:7778` I2C 控制器，只有 `Info.plist` |
-| `OhMyDSPACE.kext` / OhMyDSP ACE | 0.3.4（内核本地构建） | 内置数字麦克风及录音期间的内置扬声器播放 |
+| 模块 | 版本 | 本机用途 | 注入指南 |
+| --- | --- | --- | --- |
+| `ThinkBookISHProbe.kext` | 0.5.3 | 从 Intel ISH `8086:7745` 持续读取照度，处理 HID 超时和睡眠唤醒 | [查看指南](docs/thinkbook-ish-probe.md) |
+| `ISHLightSensor.kext` | 1.0.0 | 将真实照度转换为 VirtualSMC 环境光键，通知 macOS 更新 | [查看指南](docs/ish-light-sensor.md) |
+| `NativeALSDisplay.kext` | 1.0.1 | 为目标内屏 `06AF:C4B5` 提供原生自动调光所需的可用亮度范围 | [查看指南](docs/native-als-display.md) |
+| `GoodixForceTouch.kext` | 1.0.0 | 为 Goodix `27C6:01E9` 识别普通按压和重按 | [查看指南](docs/goodix-force-touch.md) |
+| `VoodooGPIO.kext` | 1.1.1（本地构建） | 增加 `INTC105E` Meteor Lake-P 支持，用于本机触控板 GPIO 中断 | [查看指南](docs/voodoo-gpio.md) |
+| `VoodooI2CHID.kext` | 1.0.2 | 适配本机 HID 描述符，过滤同一采样的重复报告 | [查看指南](docs/voodoo-i2chid.md) |
+| `VoodooInput.kext` | 1.1.8 | 保留触控板上报的压力值 | [查看指南](docs/voodoo-input.md) |
+| `ThinkBookI2C.kext` | 1.0.0 | 让 VoodooI2C 匹配本机 `8086:7778` I2C 控制器，只有 `Info.plist` | [查看指南](docs/thinkbook-i2c.md) |
+| `OhMyDSPACE.kext` / OhMyDSP ACE | 0.3.4（内核本地构建） | 内置数字麦克风及录音期间的内置扬声器播放 | [查看指南](docs/microphone.md) |
 
 `Kexts/` 收录公开快照中的本机版本，`src/` 保存对应源码，`versions.json` 记录 bundle ID、版本和二进制 SHA‑256。`ACPI/` 保存三张本机补充表的 DSL 和 AML。Wi‑Fi、蓝牙和现有 EFI 的整份 `config.plist` 由各自项目管理。
 
@@ -32,6 +32,8 @@
 各组件沿用对应源码的许可与声明。`LICENSES/` 收录上游许可文本。
 
 ## OpenCore 集成
+
+备份、I2C 触控板加载顺序和配置校验见 [OpenCore 注入通用步骤](docs/opencore.md)。
 
 使用现有的可启动配置。将本仓库的同名 kext 替换到现有 `Kernel/Add` 对应路径，检查 BundlePath、ExecutablePath 和 PlistPath。`ThinkBookI2C` 的 ExecutablePath 为空。以下是实机配置里的依赖关系。
 
