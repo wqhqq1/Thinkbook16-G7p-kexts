@@ -32,5 +32,18 @@
   "ThinkBookI2C": {
     "version": "1.0.0",
     "bundle_id": "local.thinkbook.i2c.compatibility"
+  },
+  "OhMyDSPACE": {
+    "version": "0.3.4",
+    "bundle_id": "local.OhMyDSPACE",
+    "distribution": "local-build",
+    "tested_executable_sha256": "a8a575f67f71b658be0d8e7b94561ccea51ee34af6306ab48d9f3cbc56b7cd1e",
+    "tested_macho_uuid": "8AAC7207-B0DD-39BA-8620-12E668090431"
+  },
+  "OhMyDSP-ACE": {
+    "version": "0.3.4",
+    "bundle_id": "com.ohmydsp.ace.driver",
+    "executable_sha256": "931d41f4a6f2bd4524da63ded31ef263455b1d1dbbc9e2954985573528c70032",
+    "daemon_sha256": "36a297e57ac2819939248c02d95ea641dcb54fcf25424c91b3438892bcfdc309"
   }
 }

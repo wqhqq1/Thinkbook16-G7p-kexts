@@ -1,6 +1,6 @@
 # ThinkBook 16 G7+ IAH Kexts
 
-联想 ThinkBook 16 G7+ IAH（21TL）的 macOS 专用 kext。当前快照来自 Core Ultra 9 285H、macOS Sequoia 15.7.8（24G824，x86_64）的实机。收录触控板、环境光和显示接入相关的本机版本，以及配套 ACPI 源码。
+联想 ThinkBook 16 G7+ IAH（21TL）的 macOS 专用 kext。当前快照来自 Core Ultra 9 285H、macOS Sequoia 15.7.8（24G824，x86_64）的实机。收录触控板、环境光、显示接入和内置数字麦克风的本机版本，以及配套 ACPI 源码。
 
 | 模块 | 版本 | 本机用途 |
 | --- | --- | --- |
@@ -12,6 +12,7 @@
 | `VoodooI2CHID.kext` | 1.0.2 | 适配本机 HID 描述符，过滤同一采样的重复报告 |
 | `VoodooInput.kext` | 1.1.8 | 保留触控板上报的压力值 |
 | `ThinkBookI2C.kext` | 1.0.0 | 让 VoodooI2C 匹配本机 `8086:7778` I2C 控制器，只有 `Info.plist` |
+| `OhMyDSPACE.kext` / OhMyDSP ACE | 0.3.4（内核本地构建） | 内置数字麦克风及录音期间的内置扬声器播放 |
 
 `Kexts/` 收录公开快照中的本机版本，`src/` 保存对应源码，`versions.json` 记录 bundle ID、版本和二进制 SHA‑256。`ACPI/` 保存三张本机补充表的 DSL 和 AML。Wi‑Fi、蓝牙和现有 EFI 的整份 `config.plist` 由各自项目管理。
 
@@ -23,6 +24,7 @@
 - `ISHLightSensor` 改自 VirtualSMC 的 `SMCLightSensor`，编译使用 VirtualSMC `b5c62c2` 和 Lilu `0249c3a` 的接口。原许可文本分别存于 `LICENSES/`。[VirtualSMC `b5c62c2`](https://github.com/acidanthera/VirtualSMC/tree/b5c62c2) · [Lilu `0249c3a`](https://github.com/acidanthera/Lilu/tree/0249c3a)
 - `ThinkBookISHProbe` 是本机 IOKit 实现，参考 Linux Intel ISH/ISHTP 的协议，源码使用 `GPL-2.0-only` 标记。`NativeALSDisplay` 是本机编写的显示接入扩展。[Linux Intel ISH](https://docs.kernel.org/hid/intel-ish-hid.html)
 - `SSDT-IALS` 的设备结构参考 OpenCorePkg `SSDT-ALS0`，保留 OpenCorePkg 的 BSD-3-Clause 许可文本。它向 AppleSMCLMU 提供 ACPI 匹配入口，实时照度由 `ISHLightSensor` 提供。[OpenCorePkg SSDT-ALS0](https://github.com/acidanthera/OpenCorePkg/blob/1.0.8/Docs/AcpiSamples/Source/SSDT-ALS0.dsl)
+- `OhMyDSP ACE` 基于 OhMyDSP 的后台服务和 Core Audio 插件，使用 Sound Open Firmware（SOF）及本机 NHLT 参数。上游许可证随仓库提供。[OhMyDSP `0b928ef`](https://github.com/itsyvintsyspider/OhMyDSP/tree/0b928ef08a9a47d12d768128981ba88d0f1e8b8d) · [SOF 固件与拓扑](https://github.com/thesofproject/sof-bin)
 - 构建依赖 MacKernelSDK `3f750085caa17ec3a7880f11c11bf4f48cd6a164`。使用仓库外的 SDK 源码目录。[MacKernelSDK](https://github.com/acidanthera/MacKernelSDK/tree/3f750085caa17ec3a7880f11c11bf4f48cd6a164)
 
 各组件沿用对应源码的许可与声明。`LICENSES/` 收录上游许可文本。
@@ -35,7 +37,13 @@
 - 自动调光使用 `SSDT-IALS.aml`、Lilu、VirtualSMC 及本仓库的三个照度和显示扩展。Lilu 和 VirtualSMC 在 `ISHLightSensor` 之前加载，同一套配置中禁用旧 `SMCLightSensor` 条目。
 - `SSDT-TB-HDA.aml` 是本机板载声卡的可选 ACPI 配置，配合 AppleALC 使用。AppleALC、NMHDA 和 CtlnaSDXC 的原有二进制由各自项目或系统提供。[AppleALC](https://github.com/acidanthera/AppleALC) · [NMHDA](https://github.com/nullmoth/NMHDA)
 
+- 内置数字麦克风需要注入 `OhMyDSPACE.kext`，并安装配套的 Core Audio 插件和后台服务。见[麦克风构建与安装](docs/microphone.md)。
+
 该快照对应本机的固件设备路径和硬件 ID。更换机型或 BIOS 后，先核对这些匹配条件，再使用相应模块。
+
+## 维护目录
+
+后续在仓库中编辑 `src/`、运行 `scripts/`，构建结果放在 `build/`。实机固件输入、预编译的本机专用包和含设备身份的恢复配置保存在忽略目录 `.local/`。从 GitHub 克隆时不会下载这些本机文件。
 
 ## 从源码构建
 
