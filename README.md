@@ -1,3 +1,5 @@
+**简体中文** | **[English](README.en.md)**
+
 # ThinkBook 16 G7+ IAH Kexts
 
 联想 ThinkBook 16 G7+ IAH（21TL）的 macOS 专用 kext。当前快照来自 Core Ultra 9 285H、macOS Sequoia 15.7.8（24G824，x86_64）的实机。收录触控板、环境光、显示接入和内置数字麦克风的本机版本，以及配套 ACPI 源码。
