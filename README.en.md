@@ -2,7 +2,7 @@
 
 # ThinkBook 16 G7+ IAH Kexts
 
-macOS kernel extensions for the Lenovo ThinkBook 16 G7+ IAH (21TL). This snapshot comes from a Core Ultra 9 285H system running macOS Sequoia 15.7.8 (24G824, x86_64). It includes model-specific extensions for the trackpad, ambient light sensor, display, and internal digital microphone, along with the corresponding ACPI tables.
+macOS kernel extensions for the Lenovo ThinkBook 16 G7+ IAH (21TL). This snapshot comes from a Core Ultra 9 285H system running macOS Sequoia 15.7.8 (24G824, x86_64). Ambient light, display integration, and the microphone were also verified on macOS Tahoe 26.7.3 (25G342). It includes model-specific extensions for the trackpad, ambient light sensor, display, and internal digital microphone, along with the corresponding ACPI tables.
 
 | Component | Version | Purpose | Injection guide |
 | --- | --- | --- | --- |
@@ -14,7 +14,7 @@ macOS kernel extensions for the Lenovo ThinkBook 16 G7+ IAH (21TL). This snapsho
 | `VoodooI2CHID.kext` | 1.0.2 | Adapts to this model’s HID descriptor and filters duplicate reports for the same sample. | [Open guide](docs/voodoo-i2chid.md#english) |
 | `VoodooInput.kext` | 1.1.8 | Preserves the pressure values reported by the trackpad. | [Open guide](docs/voodoo-input.md#english) |
 | `ThinkBookI2C.kext` | 1.0.0 | Matches this model’s `8086:7778` I2C controller to VoodooI2C. Contains only `Info.plist`. | [Open guide](docs/thinkbook-i2c.md#english) |
-| `OhMyDSPACE.kext` / OhMyDSP ACE | 0.3.4 (local kernel build) | Enables the internal digital microphone and internal speaker playback while recording. | [Open guide](docs/microphone.md#english) |
+| `OhMyDSPACE.kext` / OhMyDSP ACE | 0.3.7 (local kernel build) | Enables the internal digital microphone and internal speaker playback while recording. | [Open guide](docs/microphone.md#english) |
 
 `Kexts/` contains the publicly distributed bundles, `src/` contains the corresponding source, and `versions.json` records bundle IDs, versions, and binary SHA-256 hashes. `ACPI/` contains the DSL sources and compiled AML for three supplemental ACPI tables. Wi-Fi, Bluetooth, and the full EFI `config.plist` are maintained separately.
 

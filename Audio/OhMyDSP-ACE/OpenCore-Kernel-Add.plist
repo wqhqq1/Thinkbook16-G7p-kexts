@@ -6,17 +6,17 @@
 		<key>Arch</key>
 		<string>x86_64</string>
 		<key>BundlePath</key>
-		<string>OhMyDSPACE-034.kext</string>
+		<string>OhMyDSPACE-037.kext</string>
 		<key>Comment</key>
-		<string>OhMyDSP ACE 0.3.4 - analog playback format and restart</string>
+		<string>OhMyDSP ACE 0.3.7 - SimpleHDA input lease on Tahoe</string>
 		<key>Enabled</key>
 		<true/>
 		<key>ExecutablePath</key>
 		<string>Contents/MacOS/OhMyDSPACE</string>
 		<key>MaxKernel</key>
-		<string>24.99.99</string>
+		<string>25.99.99</string>
 		<key>MinKernel</key>
-		<string>24.0.0</string>
+		<string>25.0.0</string>
 		<key>PlistPath</key>
 		<string>Contents/Info.plist</string>
 	</dict>

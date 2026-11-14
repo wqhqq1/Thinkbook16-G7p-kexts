@@ -34,11 +34,18 @@
     "bundle_id": "local.thinkbook.i2c.compatibility"
   },
   "OhMyDSPACE": {
-    "version": "0.3.4",
+    "version": "0.3.7",
     "bundle_id": "local.OhMyDSPACE",
     "distribution": "local-build",
-    "tested_executable_sha256": "a8a575f67f71b658be0d8e7b94561ccea51ee34af6306ab48d9f3cbc56b7cd1e",
-    "tested_macho_uuid": "8AAC7207-B0DD-39BA-8620-12E668090431"
+    "tested_executable_sha256": "1652fb37653f9094b2534fb06182b3389a8e37f17bf8405f26b6dc0baa0dc247",
+    "tested_macho_uuid": "F4EE11FD-04F9-31B1-A95A-E67010A3F859",
+    "tested_on": "25G342",
+    "sequoia_tested": {
+      "version": "0.3.4",
+      "tested_executable_sha256": "a8a575f67f71b658be0d8e7b94561ccea51ee34af6306ab48d9f3cbc56b7cd1e",
+      "tested_macho_uuid": "8AAC7207-B0DD-39BA-8620-12E668090431",
+      "tested_on": "24G824"
+    }
   },
   "OhMyDSP-ACE": {
     "version": "0.3.4",

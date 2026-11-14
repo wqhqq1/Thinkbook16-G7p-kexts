@@ -21,7 +21,7 @@
 | `Enabled` | `true` |
 | `Arch` | `x86_64` |
 | `MinKernel` | `24.0.0` |
-| `MaxKernel` | `24.99.99` |
+| `MaxKernel` | `25.99.99` |
 
 ### 验证
 
@@ -52,7 +52,7 @@ For Intel ISH `8086:7745`. This extension reads ambient light. To enable automat
 | `Enabled` | `true` |
 | `Arch` | `x86_64` |
 | `MinKernel` | `24.0.0` |
-| `MaxKernel` | `24.99.99` |
+| `MaxKernel` | `25.99.99` |
 
 ### Verify
 

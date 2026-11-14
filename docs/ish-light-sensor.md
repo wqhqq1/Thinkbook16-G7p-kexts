@@ -21,7 +21,7 @@
 | `Enabled` | `true` |
 | `Arch` | `x86_64` |
 | `MinKernel` | `24.0.0` |
-| `MaxKernel` | `24.99.99` |
+| `MaxKernel` | `25.99.99` |
 
 ### 验证
 
@@ -52,7 +52,7 @@ Feeds Intel ISH light readings into VirtualSMC. You need Lilu, VirtualSMC, and [
 | `Enabled` | `true` |
 | `Arch` | `x86_64` |
 | `MinKernel` | `24.0.0` |
-| `MaxKernel` | `24.99.99` |
+| `MaxKernel` | `25.99.99` |
 
 ### Verify
 

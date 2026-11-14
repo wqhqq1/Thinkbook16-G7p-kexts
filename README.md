@@ -2,7 +2,7 @@
 
 # ThinkBook 16 G7+ IAH Kexts
 
-联想 ThinkBook 16 G7+ IAH（21TL）的 macOS 专用 kext。当前快照来自 Core Ultra 9 285H、macOS Sequoia 15.7.8（24G824，x86_64）的实机。收录触控板、环境光、显示接入和内置数字麦克风的本机版本，以及配套 ACPI 源码。
+联想 ThinkBook 16 G7+ IAH（21TL）的 macOS 专用 kext。当前快照来自 Core Ultra 9 285H、macOS Sequoia 15.7.8（24G824，x86_64）的实机。环境光、显示接入和麦克风已在 macOS Tahoe 26.7.3（25G342）实机验证。收录触控板、环境光、显示接入和内置数字麦克风的本机版本，以及配套 ACPI 源码。
 
 | 模块 | 版本 | 本机用途 | 注入指南 |
 | --- | --- | --- | --- |
@@ -14,7 +14,7 @@
 | `VoodooI2CHID.kext` | 1.0.2 | 适配本机 HID 描述符，过滤同一采样的重复报告 | [查看指南](docs/voodoo-i2chid.md) |
 | `VoodooInput.kext` | 1.1.8 | 保留触控板上报的压力值 | [查看指南](docs/voodoo-input.md) |
 | `ThinkBookI2C.kext` | 1.0.0 | 让 VoodooI2C 匹配本机 `8086:7778` I2C 控制器，只有 `Info.plist` | [查看指南](docs/thinkbook-i2c.md) |
-| `OhMyDSPACE.kext` / OhMyDSP ACE | 0.3.4（内核本地构建） | 内置数字麦克风及录音期间的内置扬声器播放 | [查看指南](docs/microphone.md) |
+| `OhMyDSPACE.kext` / OhMyDSP ACE | 0.3.7（内核本地构建） | 内置数字麦克风及录音期间的内置扬声器播放 | [查看指南](docs/microphone.md) |
 
 `Kexts/` 收录公开快照中的本机版本，`src/` 保存对应源码，`versions.json` 记录 bundle ID、版本和二进制 SHA‑256。`ACPI/` 保存三张本机补充表的 DSL 和 AML。Wi‑Fi、蓝牙和现有 EFI 的整份 `config.plist` 由各自项目管理。
 
